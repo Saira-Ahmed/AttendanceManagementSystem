@@ -1,8 +1,9 @@
-// User class
-public class User {
-    protected String id;
-    protected String name;
-    protected String password;
+import java.util.*;
+// Abstract User class
+abstract class User {
+    private String id;
+    private String name;
+    private String password;
 
     public User(String id, String name, String password) {
         this.id = id;
@@ -17,4 +18,6 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    public abstract void displayMenu(Scanner scanner, Attendance attendance, List<User> users);
 }

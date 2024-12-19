@@ -1,21 +1,17 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-// Attendance class
-class Attendance {
-    private List<AttendanceRecord> attendanceRecords = new ArrayList<>();
+public class Attendance {
+    private Map<String, List<AttendanceRecord>> attendanceData = new HashMap<>();
 
     public void addAttendance(String subject, String studentId, boolean isPresent) {
-        AttendanceRecord record = new AttendanceRecord(studentId, subject, isPresent);
-        attendanceRecords.add(record);
+        attendanceData.putIfAbsent(subject, new ArrayList<>());
+        attendanceData.get(subject).add(new AttendanceRecord(studentId, isPresent));
     }
 
     public List<AttendanceRecord> getAttendance(String subject) {
-        List<AttendanceRecord> records = new ArrayList<>();
-        for (AttendanceRecord record : attendanceRecords) {
-            if (record.getSubject().equals(subject)) {
-                records.add(record);
-            }
-        }
-        return records;
+        return attendanceData.getOrDefault(subject, new ArrayList<>());
     }
 }

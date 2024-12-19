@@ -2,28 +2,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main
-{
+public class Main {
     private static List<User> users = new ArrayList<>();
     private static Attendance attendance = new Attendance();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         initializeUsers();
+
         while (true) {
-            System.out.println("=== Welcome to Attendance Management System ===");
+            System.out.println("\n=== Welcome to Attendance Management System ===");
             System.out.println("1. Login");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             if (choice == 0) {
                 System.out.println("Exiting program...");
-                break; // Exit the program
-            }
-
-            if (choice == 1) {
+                break;
+            } else if (choice == 1) {
                 System.out.print("Enter User ID: ");
                 String id = scanner.nextLine();
                 System.out.print("Enter Password: ");
@@ -31,13 +29,7 @@ public class Main
 
                 User user = authenticate(id, password);
                 if (user != null) {
-                    if (user instanceof Admin) {
-                        ((Admin) user).adminMenu(scanner, users, attendance);
-                    } else if (user instanceof Teacher) {
-                        ((Teacher) user).teacherMenu(scanner, attendance);
-                    } else if (user instanceof Student) {
-                        ((Student) user).studentMenu(scanner, attendance);
-                    }
+                    user.displayMenu(scanner, attendance, users);
                 } else {
                     System.out.println("Invalid ID or Password. Please try again.");
                 }
@@ -46,7 +38,7 @@ public class Main
             }
         }
 
-        scanner.close(); // Close scanner
+        scanner.close();
     }
 
     private static User authenticate(String id, String password) {

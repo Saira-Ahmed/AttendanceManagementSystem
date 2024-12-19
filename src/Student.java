@@ -1,20 +1,21 @@
 import java.util.List;
 import java.util.Scanner;
 
-// Student class
-class Student extends User {
+public class Student extends User {
     public Student(String id, String name, String password) {
         super(id, name, password);
     }
 
-    public void studentMenu(Scanner scanner, Attendance attendance) {
+    @Override
+    public void displayMenu(Scanner scanner, Attendance attendance, List<User> users) {
         while (true) {
-            System.out.println("Student Menu:");
+            System.out.println("\nStudent Menu:");
             System.out.println("1. View Attendance");
             System.out.println("0. Logout");
+            System.out.print("Choose an option: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -23,7 +24,7 @@ class Student extends User {
                     List<AttendanceRecord> records = attendance.getAttendance(subject);
                     System.out.println("\nAttendance for " + subject);
                     for (AttendanceRecord record : records) {
-                        if (record.getStudentId().equals(this.id)) {
+                        if (record.getStudentId().equals(this.getId())) {
                             System.out.printf("Present: %s\n", record.isPresent() ? "Yes" : "No");
                         }
                     }

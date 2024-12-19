@@ -7,14 +7,16 @@ class Admin extends User {
         super(id, name, password);
     }
 
-    public void adminMenu(Scanner scanner, List<User> users, Attendance attendance) {
+    @Override
+    public void displayMenu(Scanner scanner, Attendance attendance, List<User> users) {
         while (true) {
-            System.out.println("Admin Menu:");
+            System.out.println("\nAdmin Menu:");
             System.out.println("1. Register Teacher");
             System.out.println("2. Register Student");
             System.out.println("3. Add Attendance");
             System.out.println("4. View Attendance Report");
             System.out.println("0. Logout");
+            System.out.print("Choose an option: ");
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline

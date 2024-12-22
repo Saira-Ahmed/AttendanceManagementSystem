@@ -1,6 +1,7 @@
-import java.util.*;
-// Abstract User class
-abstract class User {
+import java.io.Serializable;
+import java.util.Scanner;
+
+public abstract class User implements Serializable {
     private String id;
     private String name;
     private String password;
@@ -19,5 +20,5 @@ abstract class User {
         return password;
     }
 
-    public abstract void displayMenu(Scanner scanner, Attendance attendance, List<User> users);
+    public abstract void displayMenu(Scanner scanner, Attendance attendance, java.util.List<User> users);
 }

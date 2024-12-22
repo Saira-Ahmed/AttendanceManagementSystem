@@ -9,41 +9,38 @@ public class Teacher extends User {
     @Override
     public void displayMenu(Scanner scanner, Attendance attendance, List<User> users) {
         while (true) {
-            System.out.println("\nTeacher Menu:");
-            System.out.println("1. Take Attendance");
-            System.out.println("2. View Attendance Report");
+            System.out.println("\n--- Teacher Menu ---");
+            System.out.println("1. Add Attendance");
+            System.out.println("2. View Attendance");
             System.out.println("0. Logout");
             System.out.print("Choose an option: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
+            int choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
                     System.out.print("Enter Subject: ");
                     String subject = scanner.nextLine();
                     System.out.print("Enter Student ID: ");
                     String studentId = scanner.nextLine();
-                    System.out.print("Is Present (true/false): ");
-                    boolean present = scanner.nextBoolean();
-                    attendance.addAttendance(subject, studentId, present);
-                    System.out.println("Attendance recorded successfully.");
+                    System.out.print("Present? (true/false): ");
+                    boolean isPresent = Boolean.parseBoolean(scanner.nextLine());
+                    attendance.addAttendance(subject, studentId, isPresent);
+                    System.out.println("Attendance added successfully!");
                     break;
                 case 2:
-                    System.out.print("Enter Subject for report: ");
-                    String reportSubject = scanner.nextLine();
-                    List<AttendanceRecord> records = attendance.getAttendance(reportSubject);
-                    System.out.println("\nAttendance Report for " + reportSubject);
-                    System.out.println("Student ID\tPresent");
+                    System.out.print("Enter Subject: ");
+                    String subjectToView = scanner.nextLine();
+                    List<AttendanceRecord> records = attendance.getAttendance(subjectToView);
+                    System.out.println("\n--- Attendance Records for " + subjectToView + " ---");
                     for (AttendanceRecord record : records) {
-                        System.out.printf("%s\t\t%s\n", record.getStudentId(), record.isPresent() ? "Yes" : "No");
+                        System.out.println(record);
                     }
                     break;
                 case 0:
                     System.out.println("Logging out...");
                     return;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("Invalid option. Please try again.");
             }
         }
     }

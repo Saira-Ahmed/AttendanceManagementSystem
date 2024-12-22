@@ -1,4 +1,6 @@
-public class AttendanceRecord {
+import java.io.Serializable;
+
+public class AttendanceRecord implements Serializable {
     private String studentId;
     private boolean isPresent;
 
@@ -13,5 +15,10 @@ public class AttendanceRecord {
 
     public boolean isPresent() {
         return isPresent;
+    }
+
+    @Override
+    public String toString() {
+        return "Student ID: " + studentId + ", Present: " + isPresent;
     }
 }

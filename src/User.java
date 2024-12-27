@@ -1,10 +1,10 @@
 import java.io.Serializable;
-import java.util.Scanner;
 
 public abstract class User implements Serializable {
-    private String id;
-    private String name;
-    private String password;
+    private static final long serialVersionUID = 1L;
+    private final String id;
+    private final String name;
+    private final String password;
 
     public User(String id, String name, String password) {
         this.id = id;
@@ -20,5 +20,9 @@ public abstract class User implements Serializable {
         return password;
     }
 
-    public abstract void displayMenu(Scanner scanner, Attendance attendance, java.util.List<User> users);
+    public String getName() {
+        return name;
+    }
+
+    public abstract void displayMenu();
 }

@@ -1,38 +1,54 @@
-import java.util.List;
-import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Student extends User {
+    private static final long serialVersionUID = 1L;
+
     public Student(String id, String name, String password) {
         super(id, name, password);
     }
 
     @Override
-    public void displayMenu(Scanner scanner, Attendance attendance, List<User> users) {
-        while (true) {
-            System.out.println("\n--- Student Menu ---");
-            System.out.println("1. View Attendance");
-            System.out.println("0. Logout");
-            System.out.print("Choose an option: ");
+    public void displayMenu() {
+        JFrame studentFrame = new JFrame("Student Menu");
+        studentFrame.setSize(300, 200);
+        studentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        studentFrame.setLayout(new GridLayout(3, 1));
 
-            int choice = Integer.parseInt(scanner.nextLine());
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter Subject: ");
-                    String subject = scanner.nextLine();
-                    List<AttendanceRecord> records = attendance.getAttendance(subject);
-                    System.out.println("\n--- Attendance Records for " + subject + " ---");
-                    for (AttendanceRecord record : records) {
-                        if (record.getStudentId().equals(getId())) {
-                            System.out.println(record);
-                        }
-                    }
-                    break;
-                case 0:
-                    System.out.println("Logging out...");
-                    return;
-                default:
-                    System.out.println("Invalid option. Please try again.");
+        JButton btnViewAttendance = new JButton("View Attendance");
+        JButton btnViewMarks = new JButton("View Marks");
+        JButton btnLogout = new JButton("Logout");
+
+        studentFrame.add(btnViewAttendance);
+        studentFrame.add(btnViewMarks);
+        studentFrame.add(btnLogout);
+
+        studentFrame.setVisible(true);
+
+        btnViewAttendance.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Course course = Main.courses.get(0); // Get the first course for simplicity
+                Boolean attendance = course.getAttendance(getId());
+                String message = "Attendance: " + (attendance != null ? (attendance ? "Present" : "Absent") : "No Record");
+                JOptionPane.showMessageDialog(studentFrame, message);
             }
-        }
+        });
+
+        btnViewMarks.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Course course = Main.courses.get(0); // Get the first course for simplicity
+                Integer marks = course.getMarks(getId());
+                String message = "Marks: " + (marks != null ? marks : "No Marks");
+                JOptionPane.showMessageDialog(studentFrame, message);
+            }
+        });
+
+        btnLogout.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                studentFrame.dispose();
+            }
+        });
     }
 }
